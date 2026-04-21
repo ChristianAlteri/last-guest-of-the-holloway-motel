@@ -1,25 +1,20 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
-  title: "The Last Guest of the Holloway Motel (2025) | Official Documentary",
-  description: "The documentary follows Tony Powell, a former British soccer star who played for Norwich City Football Club in the 1970s before mysteriously disappearing from public life. Now managing the Holloway Motel in West Hollywood, he must confront long-buried truths when the motel faces closure.",
-  keywords: ["documentary", "Tony Powell", "Holloway Motel", "Norwich City", "LGBTQ", "soccer", "football"],
+  title: "The Last Guest of the Holloway Motel | Documentary 2025",
+  description: "The untold story of Tony Powell, a former British soccer star who vanished from public life only to resurface decades later as the sole resident of the Holloway Motel in West Hollywood.",
+  keywords: ["documentary", "Tony Powell", "Holloway Motel", "Norwich City", "queer cinema", "football", "LGBTQ"],
   openGraph: {
     title: "The Last Guest of the Holloway Motel",
-    description: "An important entry in the queer canon. A documentary about a beloved closeted sports figure who survived the only way he knew how.",
+    description: "A former football star. A fading motel. One last chance at the truth.",
     type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "The Last Guest of the Holloway Motel",
+    description: "Documentary feature premiering June 2025",
   },
 };
 
@@ -29,11 +24,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col bg-neutral-950 text-neutral-50">
+    <html lang="en" className="scroll-smooth">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      </head>
+      <body className="min-h-full flex flex-col bg-stone-950 text-stone-200 antialiased">
         {children}
       </body>
     </html>

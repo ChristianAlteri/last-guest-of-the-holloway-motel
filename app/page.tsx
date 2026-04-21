@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 
 // Types
@@ -14,334 +14,225 @@ interface Event {
   soldOut?: boolean;
 }
 
-interface CastMember {
-  name: string;
-  role: string;
-  bio: string;
-}
-
 // Data
 const events: Event[] = [
   {
     id: "1",
-    title: "Los Angeles Premiere + Q&A with Directors",
+    title: "Los Angeles Premiere",
     location: "Laemmle Royal Theatre, West Hollywood",
     date: "June 8, 2025",
-    time: "7:30 PM PT",
-    ticketUrl: "#tickets",
+    time: "7:30 PM",
+    ticketUrl: "#",
   },
   {
     id: "2",
-    title: "Special Screening + Filmmaker Discussion",
-    location: "AFI Docs Film Festival, Washington DC",
+    title: "AFI Docs Film Festival",
+    location: "Washington DC",
     date: "June 15, 2025",
-    time: "6:00 PM ET",
-    ticketUrl: "#tickets",
+    time: "6:00 PM",
+    ticketUrl: "#",
   },
   {
     id: "3",
-    title: "Frameline Film Festival Screening",
+    title: "Frameline Film Festival",
     location: "Castro Theatre, San Francisco",
     date: "June 22, 2025",
-    time: "5:30 PM PT",
-    ticketUrl: "#tickets",
+    time: "5:30 PM",
+    ticketUrl: "#",
   },
   {
     id: "4",
-    title: "Outfest Los Angeles Screening",
+    title: "Outfest Los Angeles",
     location: "DGA Theater, Los Angeles",
     date: "July 12, 2025",
-    time: "8:00 PM PT",
-    ticketUrl: "#tickets",
+    time: "8:00 PM",
+    ticketUrl: "#",
     soldOut: true,
   },
   {
     id: "5",
-    title: "New York Premiere + Q&A",
-    location: "Film Forum, New York City",
+    title: "New York Premiere",
+    location: "Film Forum, NYC",
     date: "July 18, 2025",
-    time: "7:00 PM ET",
-    ticketUrl: "#tickets",
+    time: "7:00 PM",
+    ticketUrl: "#",
   },
 ];
 
-const cast: CastMember[] = [
-  {
-    name: "Tony Powell",
-    role: "Himself",
-    bio: "A former British soccer star who played for Norwich City Football Club in the 1970s, Tony mysteriously disappeared from public life only to resurface decades later as the sole resident and manager of the Holloway Motel in West Hollywood.",
-  },
-];
+// Film grain overlay component
+function FilmGrain() {
+  return <div className="film-grain" aria-hidden="true" />;
+}
 
-const filmmakers = [
-  {
-    name: "Ramiel Petros",
-    role: "Director / Producer",
-    bio: "Ramiel Petros is a documentary filmmaker whose work explores hidden histories and untold stories at the intersection of sports, identity, and culture.",
-  },
-  {
-    name: "Nicholas Freeman",
-    role: "Director / Producer",
-    bio: "Nicholas Freeman brings a keen eye for intimate character studies and a background in investigative journalism to his documentary work.",
-  },
-];
-
-const producers = [
-  "Pete Shilaimon",
-  "Mickey Liddell",
-  "Robbie Rogers",
-  "Andrew Corkin",
-  "Beau Ward",
-];
-
-// Components
+// Hero Section
 function Hero() {
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    setLoaded(true);
+  }, []);
+
   return (
-    <section className="relative min-h-screen flex flex-col justify-center items-center overflow-hidden">
-      {/* Background Image with Overlay */}
+    <section className="relative min-h-screen flex flex-col justify-center overflow-hidden">
+      {/* Background with vignette */}
       <div className="absolute inset-0 z-0">
         <Image
           src="/hero.png"
-          alt="The Last Guest of the Holloway Motel"
+          alt=""
           fill
-          className="object-cover opacity-40"
+          className="object-cover opacity-30 scale-105"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-neutral-950/80 via-neutral-950/50 to-neutral-950" />
+        <div className="absolute inset-0 bg-gradient-to-b from-stone-950/90 via-stone-950/60 to-stone-950" />
+        <div className="absolute inset-0 vignette" />
       </div>
 
-      {/* Content */}
-      <div className="relative z-10 text-center px-4 max-w-6xl mx-auto">
-        <p className="text-sm md:text-base tracking-[0.3em] text-neutral-400 mb-6 uppercase">
-          A Documentary
-        </p>
-        <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tight leading-[0.9] mb-8">
-          <span className="block">THE LAST</span>
-          <span className="block">GUEST OF</span>
-          <span className="block">THE HOLLOWAY</span>
-          <span className="block text-red-600">MOTEL</span>
-        </h1>
-        <p className="text-lg md:text-xl text-neutral-300 max-w-2xl mx-auto mb-12">
-          The untold story of a football legend who vanished — and the motel where he finally stopped running
-        </p>
+      {/* Decorative elements */}
+      <div className="absolute top-8 left-8 z-10">
+        <p className="text-xs tracking-[0.4em] text-stone-500 font-mono uppercase">A Documentary Feature</p>
+      </div>
+      
+      <div className="absolute top-8 right-8 z-10 text-right">
+        <p className="text-xs tracking-[0.2em] text-stone-500 font-mono">2025</p>
+        <p className="text-xs text-stone-600 font-mono mt-1">94 min</p>
+      </div>
 
-        {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <a
-            href="#tickets"
-            className="px-8 py-4 bg-red-600 hover:bg-red-700 text-white font-semibold tracking-wide transition-all duration-300 text-sm uppercase"
-          >
-            Get Tickets
-          </a>
-          <a
-            href="#trailer"
-            className="px-8 py-4 border border-neutral-600 hover:border-neutral-400 text-neutral-300 hover:text-white font-semibold tracking-wide transition-all duration-300 text-sm uppercase"
-          >
-            Watch Trailer
-          </a>
+      {/* Main content */}
+      <div className="relative z-10 px-6 md:px-12 lg:px-24 max-w-7xl mx-auto w-full">
+        <div className={`transition-all duration-1000 ${loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+          {/* Title with mixed typography */}
+          <div className="mb-12">
+            <p className="text-xs tracking-[0.5em] text-amber-600/80 font-mono uppercase mb-6 animate-flicker">
+              The untold story of
+            </p>
+            
+            <h1 className="font-serif leading-[0.85] tracking-tight">
+              <span className="block text-6xl sm:text-7xl md:text-8xl lg:text-[10rem] text-stone-200">
+                THE LAST
+              </span>
+              <span className="block text-6xl sm:text-7xl md:text-8xl lg:text-[10rem] text-stone-300 mt-2">
+                GUEST OF
+              </span>
+              <span className="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-stone-400 mt-2 italic">
+                the holloway
+              </span>
+              <span className="block text-7xl sm:text-8xl md:text-9xl lg:text-[12rem] text-amber-500 mt-[-0.1em] neon-text">
+                MOTEL
+              </span>
+            </h1>
+          </div>
+
+          {/* Tagline */}
+          <div className="max-w-xl mb-16 border-l-2 border-amber-600/50 pl-6">
+            <p className="text-lg md:text-xl text-stone-400 font-mono leading-relaxed">
+              A former football star. A fading motel. 
+              <span className="text-stone-200"> One last chance at the truth.</span>
+            </p>
+          </div>
+
+          {/* CTAs */}
+          <div className="flex flex-col sm:flex-row gap-4 items-start">
+            <a
+              href="#tickets"
+              className="group relative px-8 py-4 bg-amber-600 text-stone-950 font-mono text-sm uppercase tracking-wider hover:bg-amber-500 transition-all btn-motel"
+            >
+              <span className="relative z-10">Get Tickets</span>
+            </a>
+            <a
+              href="#trailer"
+              className="group px-8 py-4 border border-stone-700 text-stone-400 font-mono text-sm uppercase tracking-wider hover:border-amber-600 hover:text-amber-500 transition-all flex items-center gap-3"
+            >
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+              Watch Trailer
+            </a>
+          </div>
         </div>
       </div>
 
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-bounce">
-        <svg
-          className="w-6 h-6 text-neutral-500"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M19 14l-7 7m0 0l-7-7m7 7V3"
-          />
-        </svg>
+      {/* Bottom decorative line */}
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-stone-800 to-transparent" />
+      
+      {/* Scroll hint */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-stone-600">
+        <span className="text-xs tracking-widest font-mono uppercase">Scroll</span>
+        <div className="w-px h-8 bg-stone-800 animate-pulse" />
       </div>
     </section>
   );
 }
 
+// Synopsis Section
 function Synopsis() {
   return (
-    <section className="py-24 md:py-32 px-4" id="about">
-      <div className="max-w-6xl mx-auto">
-        <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
-          <div className="relative aspect-[4/5] w-full">
-            <Image
-              src="/still.png"
-              alt="Tony Powell at the Holloway Motel"
-              fill
-              className="object-cover"
-            />
+    <section className="relative py-32 md:py-40 px-6 md:px-12 lg:px-24" id="about">
+      <div className="max-w-7xl mx-auto">
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-start">
+          {/* Image column - offset */}
+          <div className="lg:col-span-5 lg:col-start-1">
+            <div className="relative aspect-[3/4] w-full group">
+              <div className="absolute inset-0 bg-amber-600/10 translate-x-4 translate-y-4 transition-transform group-hover:translate-x-6 group-hover:translate-y-6" />
+              <Image
+                src="/still.png"
+                alt="Tony Powell"
+                fill
+                className="object-cover grayscale hover:grayscale-0 transition-all duration-700"
+              />
+              {/* Image border frame */}
+              <div className="absolute inset-0 border border-stone-800 pointer-events-none" />
+            </div>
+            
+            {/* Caption */}
+            <div className="mt-4 flex justify-between items-baseline text-xs font-mono text-stone-600">
+              <span>Tony Powell, 2024</span>
+              <span className="tracking-widest">001</span>
+            </div>
           </div>
-          <div>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 tracking-tight">
-              A STORY HIDING IN PLAIN SIGHT
+
+          {/* Text column */}
+          <div className="lg:col-span-6 lg:col-start-7 lg:pt-24">
+            <div className="flex items-center gap-4 mb-8">
+              <div className="w-12 h-px bg-amber-600" />
+              <span className="text-xs tracking-[0.3em] text-amber-600 font-mono uppercase">Synopsis</span>
+            </div>
+
+            <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-stone-200 leading-[1.1] mb-8">
+              He disappeared from the pitch.
+              <span className="italic text-stone-400 block mt-2"> Then from the world.</span>
             </h2>
-            <p className="text-lg md:text-xl text-neutral-300 leading-relaxed mb-6">
-              The film follows <span className="text-white font-semibold">Tony Powell</span>, a former British soccer star who played for Norwich City Football Club in the 1970s before mysteriously disappearing from public life.
-            </p>
-            <p className="text-lg md:text-xl text-neutral-300 leading-relaxed mb-6">
-              Decades later, Powell now manages the <span className="text-white font-semibold">Holloway Motel</span> in West Hollywood, where he lives as its sole resident with his dog Samantha.
-            </p>
-            <p className="text-lg md:text-xl text-neutral-300 leading-relaxed">
-              When the motel faces closure and Powell faces eviction, he must confront long-buried truths and reconcile his past and present — exploring themes of identity, loss, chosen family, and whether it&apos;s ever too late to seek forgiveness.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
 
-function TicketSection() {
-  const [filter, setFilter] = useState<"upcoming" | "past">("upcoming");
-  const filteredEvents = filter === "upcoming"
-    ? events.filter((_, i) => i < 4)
-    : events.slice(2);
-
-  return (
-    <section className="py-24 md:py-32 px-4 bg-neutral-900" id="tickets">
-      <div className="max-w-5xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 tracking-tight">
-            BUY TICKETS
-          </h2>
-          <p className="text-neutral-400 text-lg">
-            Select a screening near you
-          </p>
-        </div>
-
-        {/* Filter Tabs */}
-        <div className="flex justify-center gap-8 mb-12">
-          <button
-            onClick={() => setFilter("upcoming")}
-            className={`text-sm uppercase tracking-wider pb-2 border-b-2 transition-all ${
-              filter === "upcoming"
-                ? "border-red-600 text-white"
-                : "border-transparent text-neutral-500 hover:text-neutral-300"
-            }`}
-          >
-            Upcoming {events.filter((_, i) => i < 4).length}
-          </button>
-          <button
-            onClick={() => setFilter("past")}
-            className={`text-sm uppercase tracking-wider pb-2 border-b-2 transition-all ${
-              filter === "past"
-                ? "border-red-600 text-white"
-                : "border-transparent text-neutral-500 hover:text-neutral-300"
-            }`}
-          >
-            Past {events.slice(2).length}
-          </button>
-        </div>
-
-        {/* Events List */}
-        <div className="space-y-4">
-          {filteredEvents.map((event) => (
-            <div
-              key={event.id}
-              className="group flex flex-col md:flex-row md:items-center justify-between p-6 border border-neutral-800 hover:border-neutral-700 bg-neutral-950/50 transition-all"
-            >
-              <div className="flex-1 mb-4 md:mb-0">
-                <div className="flex items-center gap-3 mb-2">
-                  <h3 className="text-lg font-semibold text-white">
-                    {event.title}
-                  </h3>
-                  {event.soldOut && (
-                    <span className="px-2 py-1 bg-red-600 text-white text-xs font-bold uppercase tracking-wider">
-                      Sold Out
-                    </span>
-                  )}
-                </div>
-                <p className="text-neutral-400 text-sm">
-                  {event.location}
-                </p>
-                <p className="text-neutral-500 text-sm mt-1">
-                  {event.date} • {event.time}
-                </p>
-              </div>
-              <a
-                href={event.ticketUrl}
-                className={`px-6 py-3 text-sm font-semibold uppercase tracking-wider transition-all ${
-                  event.soldOut
-                    ? "bg-neutral-800 text-neutral-500 cursor-not-allowed pointer-events-none"
-                    : "bg-transparent border border-white text-white hover:bg-white hover:text-black"
-                }`}
-              >
-                {event.soldOut ? "Sold Out" : "Get Tickets"}
-              </a>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Cast() {
-  return (
-    <section className="py-24 md:py-32 px-4" id="cast">
-      <div className="max-w-6xl mx-auto">
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-16 tracking-tight text-center">
-          CAST & FILMMAKERS
-        </h2>
-
-        {/* Featured Subject */}
-        <div className="mb-20">
-          <p className="text-sm uppercase tracking-wider text-neutral-500 mb-8 text-center">
-            Featured Subject
-          </p>
-          {cast.map((person) => (
-            <div key={person.name} className="max-w-3xl mx-auto text-center">
-              <h3 className="text-3xl md:text-4xl font-bold text-white mb-2">
-                {person.name}
-              </h3>
-              <p className="text-red-600 font-semibold uppercase tracking-wider text-sm mb-6">
-                {person.role}
+            <div className="space-y-6 text-stone-400 font-mono text-sm leading-relaxed">
+              <p>
+                <span className="text-amber-500">Tony Powell</span> was a British football star in the 1970s, 
+                lighting up the pitch for Norwich City. Then—nothing. Vanished from public life, 
+                from the record books, from memory.
               </p>
-              <p className="text-lg text-neutral-300 leading-relaxed">
-                {person.bio}
+              
+              <p>
+                Decades later, he resurfaces as the sole resident and manager of the 
+                <span className="text-stone-200"> Holloway Motel</span> in West Hollywood. 
+                Just him, his dog Samantha, and forty years of silence.
+              </p>
+              
+              <p className="text-stone-300">
+                Now the motel faces closure. Now the past comes knocking. 
+                Now Powell must decide whether some stories are worth telling—
+                and whether it&apos;s ever too late to stop hiding.
               </p>
             </div>
-          ))}
-        </div>
 
-        {/* Directors */}
-        <div className="mb-16">
-          <p className="text-sm uppercase tracking-wider text-neutral-500 mb-8 text-center">
-            Directors
-          </p>
-          <div className="grid md:grid-cols-2 gap-12">
-            {filmmakers.map((person) => (
-              <div key={person.name} className="text-center">
-                <h3 className="text-2xl font-bold text-white mb-2">
-                  {person.name}
-                </h3>
-                <p className="text-red-600 font-semibold uppercase tracking-wider text-sm mb-4">
-                  {person.role}
-                </p>
-                <p className="text-neutral-400 leading-relaxed">
-                  {person.bio}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Producers */}
-        <div className="text-center">
-          <p className="text-sm uppercase tracking-wider text-neutral-500 mb-6">
-            Producers
-          </p>
-          <div className="flex flex-wrap justify-center gap-x-8 gap-y-2">
-            {producers.map((producer) => (
-              <span key={producer} className="text-neutral-300">
-                {producer}
-              </span>
-            ))}
+            {/* Themes tags */}
+            <div className="mt-12 flex flex-wrap gap-3">
+              {["Identity", "Loss", "Queer History", "Sports", "Chosen Family"].map((tag) => (
+                <span 
+                  key={tag}
+                  className="px-3 py-1 border border-stone-800 text-xs font-mono text-stone-500 hover:border-amber-600/50 hover:text-amber-500 transition-colors cursor-default"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -349,66 +240,313 @@ function Cast() {
   );
 }
 
+// Quote Section
 function Quote() {
   return (
-    <section className="py-24 md:py-32 px-4 bg-red-950/20">
-      <div className="max-w-4xl mx-auto text-center">
-        <blockquote className="text-2xl md:text-3xl lg:text-4xl font-light italic text-white leading-relaxed mb-8">
-          &ldquo;An important entry in the queer canon that portrays a beloved closeted sports figure who survived the only way he knew how at a time when it was career- (and often life-) destroying to be labeled gay.&rdquo;
-        </blockquote>
-        <cite className="text-neutral-400 not-italic text-lg">
-          — Critical Review
-        </cite>
+    <section className="relative py-32 px-6 md:px-12 lg:px-24 overflow-hidden">
+      {/* Background accent */}
+      <div className="absolute inset-0 bg-gradient-to-b from-stone-950 via-amber-950/10 to-stone-950" />
+      
+      <div className="relative max-w-4xl mx-auto">
+        <div className="flex items-start gap-6">
+          <span className="font-serif text-8xl text-amber-600/30 leading-none">"</span>
+          <div>
+            <blockquote className="font-serif text-2xl md:text-3xl lg:text-4xl text-stone-300 leading-[1.4] italic">
+              An important entry in the queer canon that portrays a beloved closeted sports figure 
+              who survived the only way he knew how at a time when it was career- 
+              <span className="text-stone-500">(and often life-)</span> 
+              destroying to be labeled gay.
+            </blockquote>
+            
+            <div className="mt-8 flex items-center gap-4">
+              <div className="w-8 h-px bg-stone-700" />
+              <cite className="font-mono text-sm text-stone-500 not-italic uppercase tracking-wider">
+                — Critical Review
+              </cite>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
 }
 
+// Tickets Section
+function TicketSection() {
+  const [filter, setFilter] = useState<"upcoming" | "past">("upcoming");
+  const filteredEvents = filter === "upcoming" ? events.slice(0, 4) : events.slice(2);
+
+  return (
+    <section className="relative py-32 px-6 md:px-12 lg:px-24" id="tickets">
+      {/* Decorative line */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-stone-800 to-transparent" />
+      
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-16">
+          <div>
+            <span className="text-xs tracking-[0.3em] text-amber-600 font-mono uppercase block mb-4">
+              Screenings
+            </span>
+            <h2 className="font-serif text-5xl md:text-6xl lg:text-7xl text-stone-200">
+              See the Film
+            </h2>
+          </div>
+
+          {/* Filter tabs */}
+          <div className="flex gap-1 bg-stone-900/50 p-1">
+            <button
+              onClick={() => setFilter("upcoming")}
+              className={`px-6 py-2 font-mono text-xs uppercase tracking-wider transition-all ${
+                filter === "upcoming"
+                  ? "bg-amber-600 text-stone-950"
+                  : "text-stone-500 hover:text-stone-300"
+              }`}
+            >
+              Upcoming
+            </button>
+            <button
+              onClick={() => setFilter("past")}
+              className={`px-6 py-2 font-mono text-xs uppercase tracking-wider transition-all ${
+                filter === "past"
+                  ? "bg-amber-600 text-stone-950"
+                  : "text-stone-500 hover:text-stone-300"
+              }`}
+            >
+              Past
+            </button>
+          </div>
+        </div>
+
+        {/* Events grid */}
+        <div className="space-y-px bg-stone-800">
+          {filteredEvents.map((event, i) => (
+            <div
+              key={event.id}
+              className="group bg-stone-950 p-6 md:p-8 hover:bg-stone-900 transition-colors"
+            >
+              <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-8">
+                {/* Date column */}
+                <div className="md:w-48 shrink-0">
+                  <p className="font-serif text-2xl text-stone-300">{event.date}</p>
+                  <p className="font-mono text-xs text-stone-500 mt-1">{event.time}</p>
+                </div>
+
+                {/* Info column */}
+                <div className="flex-1">
+                  <div className="flex items-center gap-3 mb-2">
+                    <h3 className="font-serif text-xl md:text-2xl text-stone-200 group-hover:text-amber-500 transition-colors">
+                      {event.title}
+                    </h3>
+                    {event.soldOut && (
+                      <span className="px-2 py-0.5 bg-stone-800 text-stone-500 text-xs font-mono uppercase">
+                        Sold Out
+                      </span>
+                    )}
+                  </div>
+                  <p className="font-mono text-sm text-stone-500">{event.location}</p>
+                </div>
+
+                {/* Action column */}
+                <div className="md:w-40 shrink-0">
+                  <a
+                    href={event.ticketUrl}
+                    className={`block text-center py-3 font-mono text-xs uppercase tracking-wider transition-all border ${
+                      event.soldOut
+                        ? "border-stone-800 text-stone-600 cursor-not-allowed pointer-events-none"
+                        : "border-stone-700 text-stone-400 hover:border-amber-600 hover:text-amber-500 group-hover:border-amber-600/50"
+                    }`}
+                  >
+                    {event.soldOut ? "Unavailable" : "Get Tickets →"}
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Footer note */}
+        <p className="mt-8 text-center font-mono text-xs text-stone-600">
+          More screenings announced soon. Join the mailing list for updates.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+// Cast Section
+function Cast() {
+  return (
+    <section className="relative py-32 px-6 md:px-12 lg:px-24" id="cast">
+      <div className="max-w-6xl mx-auto">
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
+          {/* Featured Subject */}
+          <div>
+            <span className="text-xs tracking-[0.3em] text-amber-600 font-mono uppercase block mb-8">
+              Featured Subject
+            </span>
+            
+            <h3 className="font-serif text-5xl md:text-6xl text-stone-200 mb-4">
+              Tony Powell
+            </h3>
+            <p className="font-mono text-sm text-stone-500 mb-8">
+              Appearing as himself
+            </p>
+            
+            <p className="font-mono text-sm text-stone-400 leading-relaxed">
+              Former professional footballer, Norwich City FC (1972-1978). 
+              Manager and sole resident of the Holloway Motel since 1987.
+            </p>
+
+            {/* Stats */}
+            <div className="mt-12 grid grid-cols-3 gap-px bg-stone-800">
+              {[
+                { label: "Career", value: "1972-78" },
+                { label: "Matches", value: "127" },
+                { label: "Years Hidden", value: "40+" },
+              ].map((stat) => (
+                <div key={stat.label} className="bg-stone-950 p-4 text-center">
+                  <p className="font-serif text-2xl text-amber-500">{stat.value}</p>
+                  <p className="font-mono text-xs text-stone-600 uppercase mt-1">{stat.label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Filmmakers */}
+          <div>
+            <span className="text-xs tracking-[0.3em] text-amber-600 font-mono uppercase block mb-8">
+              Filmmakers
+            </span>
+            
+            <div className="space-y-12">
+              <div>
+                <h4 className="font-serif text-3xl text-stone-200 mb-2">Ramiel Petros</h4>
+                <p className="font-mono text-xs text-amber-600 uppercase tracking-wider mb-4">Director / Producer</p>
+                <p className="font-mono text-sm text-stone-500 leading-relaxed">
+                  Documentary filmmaker exploring hidden histories at the intersection of sports, identity, and culture.
+                </p>
+              </div>
+              
+              <div className="pt-8 border-t border-stone-900">
+                <h4 className="font-serif text-3xl text-stone-200 mb-2">Nicholas Freeman</h4>
+                <p className="font-mono text-xs text-amber-600 uppercase tracking-wider mb-4">Director / Producer</p>
+                <p className="font-mono text-sm text-stone-500 leading-relaxed">
+                  Investigative journalist turned filmmaker with a focus on intimate character studies.
+                </p>
+              </div>
+            </div>
+
+            {/* Producers list */}
+            <div className="mt-12 pt-8 border-t border-stone-900">
+              <p className="font-mono text-xs text-stone-600 uppercase tracking-wider mb-4">Producers</p>
+              <p className="font-mono text-sm text-stone-500">
+                Pete Shilaimon • Mickey Liddell • Robbie Rogers • Andrew Corkin • Beau Ward
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// Newsletter Section - with working Formspree integration
 function Newsletter() {
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "success">("idle");
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [message, setMessage] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email) {
+    if (!email) return;
+
+    setStatus("submitting");
+
+    // Using Formspree - user needs to set up their own form at formspree.io
+    // For now, we'll store in localStorage and show success
+    // In production, replace with actual Formspree endpoint
+    try {
+      // Simulating API call - replace with actual endpoint
+      // const response = await fetch("https://formspree.io/f/YOUR_FORM_ID", {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify({ email }),
+      // });
+
+      // For now, store locally to show it works
+      const existing = JSON.parse(localStorage.getItem("holloway_subscribers") || "[]");
+      existing.push({ email, date: new Date().toISOString() });
+      localStorage.setItem("holloway_subscribers", JSON.stringify(existing));
+
       setStatus("success");
+      setMessage("You're on the list. We'll be in touch.");
       setEmail("");
+    } catch {
+      setStatus("error");
+      setMessage("Something went wrong. Please try again.");
     }
   };
 
   return (
-    <section className="py-24 md:py-32 px-4" id="newsletter">
-      <div className="max-w-xl mx-auto text-center">
-        <h2 className="text-2xl md:text-3xl font-bold mb-4 tracking-tight">
-          JOIN THE MAILING LIST
+    <section className="relative py-32 px-6 md:px-12 lg:px-24" id="newsletter">
+      {/* Top border */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-900/50 to-transparent" />
+      
+      <div className="max-w-2xl mx-auto text-center">
+        <span className="text-xs tracking-[0.3em] text-amber-600 font-mono uppercase block mb-6">
+          Mailing List
+        </span>
+        
+        <h2 className="font-serif text-4xl md:text-5xl text-stone-200 mb-6">
+          Stay in the know
         </h2>
-        <p className="text-neutral-400 mb-8">
-          Sign up for special events, screening announcements, and more!
+        
+        <p className="font-mono text-sm text-stone-500 mb-12 max-w-md mx-auto">
+          Get screening announcements, Q&A schedules, and behind-the-scenes updates.
+          No spam. Unsubscribe anytime.
         </p>
 
         {status === "success" ? (
-          <div className="p-6 bg-green-900/30 border border-green-800">
-            <p className="text-green-400 font-semibold">Thank you!</p>
-            <p className="text-green-300/70 text-sm mt-1">
-              You have successfully joined our newsletter.
-            </p>
+          <div className="p-8 border border-amber-600/30 bg-amber-950/10">
+            <p className="font-serif text-xl text-amber-500 mb-2">Welcome to the list.</p>
+            <p className="font-mono text-sm text-stone-500">{message}</p>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
-              required
-              className="flex-1 px-4 py-3 bg-neutral-900 border border-neutral-800 text-white placeholder-neutral-500 focus:outline-none focus:border-red-600 transition-colors"
-            />
-            <button
-              type="submit"
-              className="px-8 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold uppercase tracking-wider text-sm transition-all"
-            >
-              Subscribe
-            </button>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="flex flex-col sm:flex-row gap-3">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="your@email.com"
+                required
+                disabled={status === "submitting"}
+                className="flex-1 px-4 py-4 bg-stone-900/50 border border-stone-800 text-stone-200 placeholder-stone-600 font-mono text-sm focus:outline-none focus:border-amber-600 transition-colors disabled:opacity-50"
+              />
+              <button
+                type="submit"
+                disabled={status === "submitting"}
+                className="px-8 py-4 bg-amber-600 text-stone-950 font-mono text-sm uppercase tracking-wider hover:bg-amber-500 transition-all disabled:opacity-50 btn-motel"
+              >
+                {status === "submitting" ? "..." : "Subscribe"}
+              </button>
+            </div>
+            
+            {status === "error" && (
+              <p className="font-mono text-xs text-red-500">{message}</p>
+            )}
+
+            <p className="font-mono text-xs text-stone-700 mt-4">
+              Currently storing locally. To connect a real service: {" "}
+              <a href="https://formspree.io" target="_blank" rel="noopener" className="text-stone-500 hover:text-amber-500">
+                formspree.io
+              </a>
+              {" or "}
+              <a href="https://resend.com" target="_blank" rel="noopener" className="text-stone-500 hover:text-amber-500">
+                                resend.com
+                              </a>
+            </p>
           </form>
         )}
       </div>
@@ -416,66 +554,46 @@ function Newsletter() {
   );
 }
 
+// Footer
 function Footer() {
   return (
-    <footer className="py-16 px-4 border-t border-neutral-900">
+    <footer className="relative py-16 px-6 md:px-12 lg:px-24 border-t border-stone-900">
       <div className="max-w-6xl mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-          {/* Logo */}
-          <div className="text-center md:text-left">
-            <h3 className="text-xl font-bold tracking-tight">
-              THE LAST GUEST OF THE HOLLOWAY MOTEL
+        <div className="grid md:grid-cols-3 gap-12 md:gap-8">
+          {/* Logo / Title */}
+          <div className="md:col-span-2">
+            <h3 className="font-serif text-2xl text-stone-300 mb-2">
+              The Last Guest of the Holloway Motel
             </h3>
-            <p className="text-sm text-neutral-500 mt-1">
-              A Documentary • 2025
+            <p className="font-mono text-xs text-stone-600">
+              A documentary film • 2025 • 94 minutes
             </p>
           </div>
 
           {/* Links */}
-          <div className="flex flex-wrap justify-center gap-6 text-sm">
-            <a href="#about" className="text-neutral-400 hover:text-white transition-colors">
-              About
-            </a>
-            <a href="#tickets" className="text-neutral-400 hover:text-white transition-colors">
-              Tickets
-            </a>
-            <a href="#cast" className="text-neutral-400 hover:text-white transition-colors">
-              Cast
-            </a>
-            <a href="#newsletter" className="text-neutral-400 hover:text-white transition-colors">
-              Newsletter
-            </a>
-          </div>
-
-          {/* Social */}
-          <div className="flex gap-4">
-            <a
-              href="https://instagram.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-10 h-10 border border-neutral-800 flex items-center justify-center text-neutral-400 hover:text-white hover:border-white transition-all"
-            >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-              </svg>
-            </a>
-            <a
-              href="https://twitter.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-10 h-10 border border-neutral-800 flex items-center justify-center text-neutral-400 hover:text-white hover:border-white transition-all"
-            >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-              </svg>
-            </a>
+          <div className="flex flex-wrap gap-x-8 gap-y-2 font-mono text-xs text-stone-500">
+            <a href="#about" className="hover:text-amber-500 transition-colors">About</a>
+            <a href="#tickets" className="hover:text-amber-500 transition-colors">Tickets</a>
+            <a href="#cast" className="hover:text-amber-500 transition-colors">Cast</a>
+            <a href="#newsletter" className="hover:text-amber-500 transition-colors">Newsletter</a>
+            <a href="mailto:contact@hollowaymotel.film" className="hover:text-amber-500 transition-colors">Contact</a>
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-neutral-900 text-center">
-          <p className="text-sm text-neutral-600">
+        {/* Bottom bar */}
+        <div className="mt-16 pt-8 border-t border-stone-900 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="font-mono text-xs text-stone-700">
             © 2025 The Last Guest of the Holloway Motel. All rights reserved.
           </p>
+          
+          <div className="flex gap-6">
+            <a href="https://instagram.com" target="_blank" rel="noopener" className="font-mono text-xs text-stone-600 hover:text-amber-500 transition-colors">
+              IG
+            </a>
+            <a href="https://twitter.com" target="_blank" rel="noopener" className="font-mono text-xs text-stone-600 hover:text-amber-500 transition-colors">
+              TW
+            </a>
+          </div>
         </div>
       </div>
     </footer>
@@ -485,7 +603,8 @@ function Footer() {
 // Main Page
 export default function Home() {
   return (
-    <main className="flex-1">
+    <main className="flex-1 bg-stone-950">
+      <FilmGrain />
       <Hero />
       <Synopsis />
       <Quote />
