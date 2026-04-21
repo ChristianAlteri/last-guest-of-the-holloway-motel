@@ -1,36 +1,124 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# The Last Guest of the Holloway Motel — Official Website
 
-## Getting Started
+A bold, cinematic single-page website for the documentary film, inspired by the clean aesthetic of ourherobalthazar.com.
 
-First, run the development server:
+## 🎬 About the Film
+
+**The Last Guest of the Holloway Motel** (2025) is a documentary following Tony Powell, a former British soccer star who played for Norwich City Football Club in the 1970s before mysteriously disappearing from public life. Decades later, Powell manages the Holloway Motel in West Hollywood as its sole resident — until the motel faces closure and he must confront his past.
+
+- **Directors:** Ramiel Petros, Nicholas Freeman
+- **Runtime:** 94 minutes
+- **Release:** June 8, 2025
+
+## 🚀 Deploy to Vercel
+
+### Option 1: One-Click Deploy
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/yourusername/lastguestdoc)
+
+### Option 2: Manual Deploy
+
+1. **Install Vercel CLI** (if not already installed):
+   ```bash
+   npm i -g vercel
+   ```
+
+2. **Login to Vercel**:
+   ```bash
+   vercel login
+   ```
+
+3. **Deploy**:
+   ```bash
+   vercel --prod
+   ```
+
+Or simply drag the `dist/` folder into [Vercel's dashboard](https://vercel.com/dashboard).
+
+### Option 3: GitHub + Vercel Integration
+
+1. Push this repo to GitHub
+2. Connect the repo in [Vercel dashboard](https://vercel.com/dashboard)
+3. Set build command: `npm run build`
+4. Set output directory: `dist`
+5. Deploy!
+
+## 🛠️ Development
 
 ```bash
+# Install dependencies
+npm install
+
+# Run dev server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npx serve dist
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📁 Project Structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+├── app/
+│   ├── globals.css      # Global styles + Tailwind
+│   ├── layout.tsx       # Root layout with metadata
+│   └── page.tsx         # Main page with all sections
+├── public/
+│   ├── hero.png         # Hero background image
+│   └── still.png        # Synopsis section image
+├── dist/                # Static export output
+└── next.config.ts       # Next.js config (static export)
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🎨 Features
 
-## Learn More
+- **Bold typographic hero** with cinematic background
+- **Synopsis section** with film stills
+- **Screening events** with "Get Tickets" CTAs (placeholder links ready for real ticketing)
+- **Cast & Crew** bios
+- **Newsletter signup** form
+- **Fully responsive** design
+- **Dark, moody aesthetic** fitting the documentary subject
 
-To learn more about Next.js, take a look at the following resources:
+## 📝 Customization
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Update Ticket Links
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+In `app/page.tsx`, find the `events` array and replace `ticketUrl: "#tickets"` with actual ticketing URLs:
 
-## Deploy on Vercel
+```typescript
+const events: Event[] = [
+  {
+    id: "1",
+    title: "Los Angeles Premiere",
+    location: "Laemmle Royal Theatre",
+    date: "June 8, 2025",
+    time: "7:30 PM",
+    ticketUrl: "https://tickets.landmarktheatres.com/...", // <-- Replace
+  },
+  // ...
+];
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Update Images
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Replace files in `public/` folder:
+- `hero.png` — Main hero background (16:9 recommended)
+- `still.png` — Synopsis section image (portrait 4:5 recommended)
+
+### Update Copy
+
+All text content is in `app/page.tsx` in the data sections:
+- `events` — Screening dates/locations
+- `cast` — Featured subject bio
+- `filmmakers` — Directors & producers
+
+## 🐉 Credits
+
+Forged by Perlavous the Dragon for your buddy's film. ROAR!
+
+---
+
+Built with [Next.js](https://nextjs.org) + [Tailwind CSS](https://tailwindcss.com)
